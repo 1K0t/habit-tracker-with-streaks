@@ -1,0 +1,16 @@
+{
+  "name": "@habit/shared",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.ts",
+  "types": "index.ts",
+  "scripts": {
+    "build": "tsc -b",
+    "clean": "rm -rf dist *.tsbuildinfo",
+    "format": "prettier --write .",
+    "lint": "echo \"Add lint rules if needed\""
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./shared" },
+    { "path": "./backend" },
+    { "path": "./frontend" }
+  ],
+  "compilerOptions": {
+    "target": "ES2021",
+    "module": "CommonJS",
+    "strict": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "allowJs": false,
+    "isolatedModules": true,
+    "noEmit": true
+  }
+}

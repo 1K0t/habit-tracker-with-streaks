@@ -1,0 +1,27 @@
+{
+  "name": "habit-tracker-monorepo",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend",
+    "shared"
+  ],
+  "scripts": {
+    "dev": "echo \"Use: yarn dev:frontend or yarn dev:backend\"",
+    "dev:frontend": "yarn workspace @habit/frontend dev",
+    "dev:backend": "yarn workspace @habit/backend start:dev",
+    "build": "yarn workspaces run build",
+    "build:frontend": "yarn workspace @habit/frontend build",
+    "build:backend": "yarn workspace @habit/backend build",
+    "lint": "yarn workspaces run lint",
+    "format": "yarn workspaces run format",
+    "test": "yarn workspaces run test"
+  },
+  "devDependencies": {
+    "typescript": "^6.0.2",
+    "ts-node": "^10.9.2",
+    "eslint": "^9.39.4",
+    "prettier": "^3.8.1",
+    "@types/node": "25.5.1"
+  }
+}
