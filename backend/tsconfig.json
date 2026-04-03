@@ -4,6 +4,8 @@
     "module": "CommonJS",
     "target": "ES2021",
     "moduleResolution": "node",
+    "ignoreDeprecations": "6.0",
+    "rootDir": "./src",
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./src",
@@ -11,6 +13,7 @@
       "@habit/shared/*": ["../shared/*"]
     },
     "strict": true,
+    "strictPropertyInitialization": false,
     "noImplicitAny": false,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,

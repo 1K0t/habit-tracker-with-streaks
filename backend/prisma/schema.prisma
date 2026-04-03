@@ -1,0 +1,68 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String    @id @default(cuid())
+  name     String?
+  email    String?   @unique
+  image    String?
+  accounts Account[]
+  habits   Habit[]
+}
+
+model Account {
+  id                String @id @default(cuid())
+  userId            String
+  provider          String
+  providerAccountId String
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@unique([provider, providerAccountId])
+}
+
+model Habit {
+  id          String       @id @default(cuid())
+  userId      String
+  name        String
+  description String?
+  startDate   DateTime
+  status      HabitStatus  @default(ACTIVE)
+  checkIns    CheckIn[]
+  milestones  MilestoneLog[]
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model CheckIn {
+  id      String   @id @default(cuid())
+  habitId String
+  date    DateTime
+
+  habit Habit @relation(fields: [habitId], references: [id], onDelete: Cascade)
+
+  @@unique([habitId, date])
+}
+
+model MilestoneLog {
+  id        String   @id @default(cuid())
+  habitId   String
+  milestone Int
+  createdAt DateTime @default(now())
+
+  habit Habit @relation(fields: [habitId], references: [id], onDelete: Cascade)
+
+  @@unique([habitId, milestone])
+}
+
+enum HabitStatus {
+  ACTIVE
+  PAUSED
+  ARCHIVED
+}

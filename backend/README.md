@@ -40,7 +40,7 @@ graph TD
 
 ## API Endpoints
 
-Base URL: `http://localhost:3001/api`
+Base URL: `http://localhost:3000/api`
 
 All endpoints require `Authorization: Bearer <jwt>`.
 
@@ -53,6 +53,16 @@ All endpoints require `Authorization: Bearer <jwt>`.
 | `DELETE` | `/habits/:id`                | Delete habit               |
 | `POST`   | `/habits/:id/checkins/today` | Check in today             |
 | `DELETE` | `/habits/:id/checkins/today` | Undo today's check-in      |
+
+## Swagger / API Docs
+
+Interactive API documentation is available via Swagger UI at:
+
+```
+http://localhost:3001/api/docs
+```
+
+Auto-generated from controller decorators using `@nestjs/swagger`. All endpoints, request bodies, query parameters, and response schemas are documented.
 
 ## WebSocket
 

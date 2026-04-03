@@ -113,7 +113,115 @@ Gateway must:
 
 ---
 
-# ✅ 7. Code Standards
+✅ 7. Swagger (OpenAPI) Documentation — REQUIRED for ALL Controllers
+Claude MUST generate Swagger decorators for:
+✅ Controller class
+✅ Each endpoint
+✅ All input DTOs
+✅ All response types
+✅ Error responses
+✅ Authentication requirements
+✅ Required imports:
+
+```ts
+import {
+  ApiTags,
+  ApiBearerAuth,
+  ApiOperation,
+  ApiOkResponse,
+  ApiCreatedResponse,
+  ApiBadRequestResponse,
+  ApiUnauthorizedResponse,
+  ApiForbiddenResponse,
+  ApiNotFoundResponse,
+  ApiBody,
+} from "@nestjs/swagger";
+```
+
+✅ 7.1 Required Patterns for Controllers
+✅ Controller header:
+
+```ts
+@ApiTags('habits')
+@ApiBearerAuth()
+@Controller('habits')
+export class HabitsController { ... }
+```
+
+✅ 7.2 Endpoint Swagger Examples
+✅ GET (list habits)
+
+```ts
+@ApiOperation({ summary: 'Get list of habits for authenticated user' })
+@ApiOkResponse({ description: 'List returned', type: HabitDto, isArray: true })
+@ApiUnauthorizedResponse({ description: 'Invalid or missing token' })
+```
+
+✅ POST (create habit)
+
+```ts
+@ApiOperation({ summary: 'Create a new habit' })
+@ApiBody({ type: CreateHabitDto })
+@ApiCreatedResponse({ description: 'Habit created', type: HabitDto })
+@ApiBadRequestResponse({ description: 'Invalid data' })
+@ApiUnauthorizedResponse({ description: 'Unauthorized' })
+```
+
+✅ PATCH (update habit)
+
+```ts
+@ApiOperation({ summary: 'Update habit fields' })
+@ApiBody({ type: UpdateHabitDto })
+@ApiOkResponse({ description: 'Habit updated', type: HabitDto })
+@ApiNotFoundResponse({ description: 'Habit not found' })
+@ApiUnauthorizedResponse({ description: 'Unauthorized' })
+```
+
+✅ DELETE (delete habit)
+
+```ts
+@ApiOperation({ summary: 'Delete a habit' })
+@ApiOkResponse({ description: 'Habit deleted' })
+@ApiNotFoundResponse({ description: 'Habit not found' })
+```
+
+✅ Check-in today
+
+```ts
+@ApiOperation({ summary: 'Check-in habit for today' })
+@ApiCreatedResponse({ description: 'Check-in added', type: CheckInTodayResponseDto })
+@ApiForbiddenResponse({ description: 'Habit is paused or archived' })
+```
+
+✅ 7.3 DTOs MUST include @ApiProperty()
+Claude MUST add Swagger decorators inside DTOs.
+Example:
+
+```ts
+export class CreateHabitDto {
+  @ApiProperty({ example: "Drink Water" })
+  name: string;
+
+  @ApiProperty({ example: "8 glasses/day", required: false })
+  description?: string;
+
+  @ApiProperty({ example: "2026-04-03" })
+  startDate: string;
+}
+```
+
+✅ 7.4 Response DTOs MUST be fully typed
+
+- HabitDto
+- CheckInDto
+- MilestoneNotificationDto
+- StreakResponseDto
+
+All MUST include @ApiProperty() for every field.
+
+---
+
+# ✅ 8. Code Standards
 
 - Use dependency injection
 - Use strongly-typed Prisma queries
@@ -124,7 +232,7 @@ Gateway must:
 
 ---
 
-# ✅ 8. Forbidden Actions
+# ✅ 9. Forbidden Actions
 
 ❌ Do not modify Prisma schema unless asked  
 ❌ Do not write SQL manually  
@@ -132,9 +240,7 @@ Gateway must:
 ❌ Do not handle SSO in backend  
 ❌ Do not modify WebSocket message formats
 
----
-
-# ✅ 9. Expected Outputs from Claude
+# ✅ 10. Expected Outputs from Claude
 
 When generating backend code, Claude must:
 

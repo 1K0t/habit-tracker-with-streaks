@@ -24,7 +24,7 @@
           },
           {
             "type": "command",
-            "command": "node $PWD/hooks/tsc.js"
+            "command": "npx ts-node $PWD/hooks/tsc.js"
           }
         ]
       }
