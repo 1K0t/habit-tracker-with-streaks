@@ -1,4 +1,4 @@
-import { Controller, Post, Delete, Param, UseGuards } from "@nestjs/common";
+import { Controller, Get, Post, Delete, Param, UseGuards } from "@nestjs/common";
 import {
   ApiTags,
   ApiBearerAuth,
@@ -26,6 +26,20 @@ import {
 @UseGuards(JwtAuthGuard)
 export class CheckInsController {
   constructor(private readonly checkInsService: CheckInsService) {}
+
+  @Get()
+  @ApiOperation({ summary: "Get all check-ins for a habit" })
+  @ApiParam({ name: "habitId", description: "Habit ID" })
+  @ApiOkResponse({ description: "Check-ins returned" })
+  @ApiForbiddenResponse({ description: "Access denied" })
+  @ApiNotFoundResponse({ description: "Habit not found" })
+  @ApiUnauthorizedResponse({ description: "Unauthorized" })
+  async getForHabit(
+    @UserId() userId: string,
+    @Param("habitId") habitId: string,
+  ) {
+    return this.checkInsService.getForHabit(userId, habitId);
+  }
 
   @Post("today")
   @ApiOperation({ summary: "Check in habit for today" })

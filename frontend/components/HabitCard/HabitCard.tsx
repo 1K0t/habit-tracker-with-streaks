@@ -23,7 +23,7 @@ const statusConfig = {
   },
 };
 
-export function HabitCard({ habit }: HabitCardProps): JSX.Element {
+export function HabitCard({ habit }: HabitCardProps): React.ReactNode {
   const statusConfig_ = statusConfig[habit.status];
 
   return (

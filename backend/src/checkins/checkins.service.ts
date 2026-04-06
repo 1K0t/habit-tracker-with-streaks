@@ -12,6 +12,7 @@ import { getTodayISO, toStartOfDay } from "../common/utils/date.utils";
 import { calculateCurrentStreak } from "../common/utils/streak.utils";
 import { MilestonesService } from "../milestones/milestones.service";
 import { WsGateway } from "../websocket/ws.gateway";
+import type { CheckIn } from "@habit/shared";
 
 @Injectable()
 export class CheckInsService {
@@ -68,6 +69,31 @@ export class CheckInsService {
       currentStreak,
       milestoneTriggered,
     };
+  }
+
+  async getForHabit(userId: string, habitId: string): Promise<CheckIn[]> {
+    const habit = await this.prisma.habit.findUnique({
+      where: { id: habitId },
+    });
+
+    if (!habit) {
+      throw new NotFoundException("Habit not found");
+    }
+
+    if (habit.userId !== userId) {
+      throw new ForbiddenException("Access denied");
+    }
+
+    const checkIns = await this.prisma.checkIn.findMany({
+      where: { habitId },
+      orderBy: { date: "asc" },
+    });
+
+    return checkIns.map((c) => ({
+      id: c.id,
+      habitId: c.habitId,
+      date: c.date.toISOString().split("T")[0],
+    }));
   }
 
   async removeToday(userId: string, habitId: string) {

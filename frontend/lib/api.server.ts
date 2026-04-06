@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import type { Habit, GetHabitsParams } from "@habit/shared";
+import type { Habit, CheckIn, GetHabitsParams } from "@habit/shared";
 
 const API_URL = process.env.BACKEND_API_URL;
 
@@ -36,4 +36,8 @@ export async function fetchHabits(params?: GetHabitsParams): Promise<Habit[]> {
 
 export async function fetchHabit(id: string): Promise<Habit> {
   return serverFetch<Habit>(`/habits/${id}`);
+}
+
+export async function fetchCheckIns(habitId: string): Promise<CheckIn[]> {
+  return serverFetch<CheckIn[]>(`/habits/${habitId}/checkins`);
 }

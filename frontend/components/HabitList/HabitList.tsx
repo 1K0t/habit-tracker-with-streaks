@@ -7,7 +7,7 @@ interface HabitListProps {
   habits: Habit[];
 }
 
-export function HabitList({ habits }: HabitListProps): JSX.Element {
+export function HabitList({ habits }: HabitListProps): React.ReactNode {
   if (habits.length === 0) {
     return (
       <div className="rounded-lg border border-dashed border-gray-300 bg-gray-50 p-12 text-center">

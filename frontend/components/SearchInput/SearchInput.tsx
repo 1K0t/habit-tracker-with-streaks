@@ -15,7 +15,7 @@ export function SearchInput({
   onChange,
   placeholder = 'Search habits...',
   className,
-}: SearchInputProps): JSX.Element {
+}: SearchInputProps): React.ReactNode {
   return (
     <Input
       type="text"
