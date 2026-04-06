@@ -17,8 +17,8 @@ export default async function HabitsPage(): Promise<React.ReactNode> {
 
   try {
     initialHabits = await fetchHabits();
-  } catch {
-    error = "Failed to load habits. Please try again later.";
+  } catch (err) {
+    error = `Failed to load habits, error is: ${err instanceof Error ? err.message : String(err)}`;
   }
 
   return <HabitsPageClient initialHabits={initialHabits} error={error} />;

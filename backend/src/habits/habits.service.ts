@@ -56,7 +56,7 @@ export class HabitsService {
     userId: string,
     filters: HabitFilters,
   ): Promise<HabitWithStreaks[]> {
-    this.logger.debug(`Listing habits for user ${userId}`);
+    this.logger.log(`Listing habits for user ${userId}`);
     const today = new Date();
     today.setUTCHours(0, 0, 0, 0);
 
@@ -95,6 +95,9 @@ export class HabitsService {
   }
 
   async findOne(userId: string, habitId: string): Promise<HabitWithStreaks> {
+    this.logger.log(
+      `Retriving habit by id: "${habitId}" for user: "${userId}".`,
+    );
     const habit = await this.prisma.habit.findUnique({
       where: { id: habitId },
       include: { checkIns: true },
@@ -116,6 +119,9 @@ export class HabitsService {
     habitId: string,
     dto: UpdateHabitDto,
   ): Promise<HabitWithStreaks> {
+    this.logger.log(
+      `Updating habit by id: "${habitId}" for user: "${userId}".`,
+    );
     const habit = await this.findOwnedHabit(userId, habitId);
 
     if (habit.status === HabitStatus.ARCHIVED) {
@@ -132,11 +138,14 @@ export class HabitsService {
       include: { checkIns: true },
     });
 
-    this.logger.log(`Habit updated: ${habitId}`);
+    this.logger.debug(`Habit updated: ${habitId} sucessfully.`);
     return this.toHabitWithStreaks(updated, updated.checkIns);
   }
 
   async remove(userId: string, habitId: string): Promise<void> {
+    this.logger.log(
+      `Removing habit by id: "${habitId}" for user: "${userId}".`,
+    );
     await this.findOwnedHabit(userId, habitId);
 
     await this.prisma.habit.delete({
@@ -149,6 +158,9 @@ export class HabitsService {
     userId: string,
     habitId: string,
   ): Promise<Habit> {
+    this.logger.log(
+      `Retriving unique habit by id: "${habitId}" for user: "${userId}".`,
+    );
     const habit = await this.prisma.habit.findUnique({
       where: { id: habitId },
     });

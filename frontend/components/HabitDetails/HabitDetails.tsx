@@ -6,6 +6,13 @@ import Link from "next/link";
 import type { Habit, CheckIn } from "@habit/shared";
 import { HabitStatus } from "@habit/shared";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
 import { CalendarView } from "@/components/CalendarView/CalendarView";
 import { TodayCheckInButton } from "@/components/HabitDetails/TodayCheckInButton";
 import { apiClient } from "@/lib/api";
@@ -24,6 +31,7 @@ export function HabitDetails({
 }: HabitDetailsProps): React.ReactNode {
   const router = useRouter();
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
+  const [showDeleteDialog, setShowDeleteDialog] = useState<boolean>(false);
   const [isUpdatingStatus, setIsUpdatingStatus] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [currentHabit, setCurrentHabit] = useState<Habit>(habit);
@@ -49,8 +57,6 @@ export function HabitDetails({
   }
 
   async function handleDelete(): Promise<void> {
-    if (!confirm("Are you sure you want to delete this habit?")) return;
-
     try {
       setIsDeleting(true);
       setError(null);
@@ -60,6 +66,7 @@ export function HabitDetails({
       const errorMessage =
         err instanceof Error ? err.message : "Failed to delete habit";
       setError(errorMessage);
+      setShowDeleteDialog(false);
     } finally {
       setIsDeleting(false);
     }
@@ -132,7 +139,11 @@ export function HabitDetails({
         <TodayCheckInButton
           habitId={habit.id}
           isCheckedInToday={currentCheckedIn}
-          onSuccess={(isCheckedIn) => setCurrentCheckedIn(isCheckedIn)}
+          onSuccess={async (isCheckedIn) => {
+            setCurrentCheckedIn(isCheckedIn);
+            const updated = await apiClient.getHabit(habit.id);
+            setCurrentHabit(updated);
+          }}
         />
       </div>
 
@@ -184,16 +195,41 @@ export function HabitDetails({
           <Link href={`/habits/${habit.id}/edit`}>Edit Details</Link>
         </Button>
         <Button
-          onClick={handleDelete}
+          onClick={() => setShowDeleteDialog(true)}
           disabled={isDeleting}
           variant="destructive"
         >
-          {isDeleting ? "Deleting..." : "Delete Habit"}
+          Delete Habit
         </Button>
         <Button asChild variant="outline">
           <Link href="/habits">Back to List</Link>
         </Button>
       </div>
+      <Dialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>
+              Confirm deletion of the habit: {currentHabit.name}
+            </DialogTitle>
+          </DialogHeader>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setShowDeleteDialog(false)}
+              disabled={isDeleting}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleDelete}
+              disabled={isDeleting}
+              className="bg-red-600 hover:bg-red-700 text-white"
+            >
+              {isDeleting ? "Deleting..." : "Confirm"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

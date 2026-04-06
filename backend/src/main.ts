@@ -33,6 +33,7 @@ async function bootstrap(): Promise<void> {
   app.enableCors({
     origin: process.env.FRONTEND_URL || "http://localhost:3000",
     credentials: true,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   });
 
   const swaggerConfig = new DocumentBuilder()

@@ -63,11 +63,11 @@ sequenceDiagram
     User->>NextAuth: Click Sign In
     NextAuth->>OAuth: Redirect to OAuth provider
     OAuth-->>NextAuth: Auth code / token
-    NextAuth->>DB: Create or load user (PrismaAdapter)
-    NextAuth-->>User: JWT session token
+    NextAuth-->>User: JWT session token (contains email + name)
 
     User->>API: API request (Authorization: Bearer JWT)
     API->>API: Verify JWT signature & expiration
+    API->>DB: Upsert user by email (auto-create on first request)
     API-->>User: Response (user-scoped data)
 
     User->>API: WebSocket connect (?token=JWT)
@@ -104,24 +104,45 @@ habit-tracker-with-streaks/
 ### Frontend (`frontend/.env.local`)
 
 ```env
+# NextAuth — encrypts the NextAuth session cookie
 NEXTAUTH_SECRET=<your-secret>
 NEXTAUTH_URL=http://localhost:3000
+
+# OAuth providers
 GOOGLE_CLIENT_ID=<your-google-client-id>
 GOOGLE_CLIENT_SECRET=<your-google-client-secret>
 GITHUB_CLIENT_ID=<your-github-client-id>
 GITHUB_CLIENT_SECRET=<your-github-client-secret>
-DATABASE_URL=postgresql://user:password@localhost:5432/habittracker
+
+# JWT — signs the custom JWT forwarded to the backend (MUST match backend JWT_SECRET)
+JWT_SECRET=<shared-jwt-secret>
+JWT_EXPIRES_IN=1d
+
+# Backend API (server-side only)
 BACKEND_API_URL=http://localhost:4000/api
-WS_URL=ws://localhost:4000/notifications
+
+# Backend API (client-side, NEXT_PUBLIC_ prefix required)
+NEXT_PUBLIC_API_URL=http://localhost:4000/api
+
+# WebSocket (client-side, NEXT_PUBLIC_ prefix required)
+NEXT_PUBLIC_WS_URL=ws://localhost:4000/notifications
 ```
 
 ### Backend (`backend/.env`)
 
 ```env
 DATABASE_URL=postgresql://user:password@localhost:5432/habittracker
-JWT_PUBLIC_KEY=<nextauth-jwt-public-key>
+
+# JWT — verifies tokens issued by the frontend (MUST match frontend JWT_SECRET)
+JWT_SECRET=<shared-jwt-secret>
+JWT_EXPIRES_IN=1d
+
 PORT=4000
 ```
+
+> **Important:** `JWT_SECRET` must be the same value in both `frontend/.env.local` and `backend/.env`.
+> The frontend signs a JWT with this secret after OAuth login; the backend verifies it on every request.
+> `NEXTAUTH_SECRET` is separate — it is only used internally by NextAuth to encrypt its own session cookie.
 
 ## Local Development Setup
 

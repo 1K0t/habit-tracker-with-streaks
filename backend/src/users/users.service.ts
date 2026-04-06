@@ -22,4 +22,13 @@ export class UsersService {
 
     return user;
   }
+
+  async findOrCreateByEmail(email: string, name?: string): Promise<User> {
+    const user = await this.prisma.user.upsert({
+      where: { email },
+      update: {},
+      create: { email, name },
+    });
+    return user;
+  }
 }

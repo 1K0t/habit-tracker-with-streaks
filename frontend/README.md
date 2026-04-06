@@ -15,6 +15,7 @@ Next.js application providing the UI and authentication layer for the Habit Trac
 | Axios | 1.7 | Client-side HTTP (mutations only) |
 | Socket.IO Client | 4 | Real-time milestone notifications |
 | Zustand | 4 | Lightweight state management |
+| Lucide React | 1 | Icon library |
 
 ## Architecture
 
@@ -80,16 +81,15 @@ sequenceDiagram
     F->>NA: signIn(provider)
     NA->>P: OAuth redirect
     P->>NA: Authorization code
-    NA->>NA: Create/load user (PrismaAdapter)
     NA->>NA: Generate custom JWT (jose, HS256)
-    Note over NA: JWT contains: email, name, sub (userId), exp
+    Note over NA: JWT contains: email, name, sub (email), exp
     NA->>F: Session with JWT attached
 
     rect rgb(240, 248, 255)
         Note over F,B: Authenticated API Requests
         F->>B: GET /habits (Authorization: Bearer <jwt>)
         B->>B: Validate JWT signature + expiration
-        B->>B: Extract userId from sub claim
+        B->>B: Upsert user by email (auto-create on first request)
         B-->>F: Habit data (scoped to user)
     end
 
@@ -220,9 +220,16 @@ DATABASE_URL=postgresql://user:password@localhost:5432/habittracker
 # Backend API (server-side only)
 BACKEND_API_URL=http://localhost:4000/api
 
+# Backend API (client-side, NEXT_PUBLIC_ prefix required)
+NEXT_PUBLIC_API_URL=http://localhost:4000/api
+
 # WebSocket (client-side, NEXT_PUBLIC_ prefix required)
 NEXT_PUBLIC_WS_URL=ws://localhost:4000/notifications
 ```
+
+> **Important:** `JWT_SECRET` must be the **same value** in both `frontend/.env.local` and `backend/.env`.
+> The frontend signs a JWT with this secret after OAuth login; the backend verifies it on every request.
+> `NEXTAUTH_SECRET` is separate — it is only used internally by NextAuth to encrypt its own session cookie.
 
 > **Note:** Only `NEXT_PUBLIC_*` variables are accessible in client components. All others are server-side only.
 

@@ -80,7 +80,11 @@ Create `backend/.env`:
 
 ```env
 DATABASE_URL=postgresql://user:password@localhost:5432/habittracker
-JWT_PUBLIC_KEY=<nextauth-jwt-public-key>
+
+# JWT — verifies tokens issued by the frontend (MUST match frontend JWT_SECRET)
+JWT_SECRET=<shared-jwt-secret>
+JWT_EXPIRES_IN=1d
+
 PORT=4000
 ```
 
