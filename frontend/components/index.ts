@@ -1,5 +1,7 @@
 export { CalendarView } from "./CalendarView";
 export { CreateHabitPageClient } from "./CreateHabitPageClient";
+export { EditHabitForm } from "./EditHabitForm";
+export { EditHabitPageClient } from "./EditHabitPageClient";
 export { Filters, type FilterOption } from "./Filters";
 export { HabitCard } from "./HabitCard";
 export { HabitDetails, TodayCheckInButton } from "./HabitDetails";

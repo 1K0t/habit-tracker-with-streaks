@@ -162,7 +162,7 @@ export function HabitDetails({
           {currentHabit.status !== HabitStatus.ACTIVE && (
             <Button
               onClick={() => handleUpdateStatus(HabitStatus.ACTIVE)}
-              disabled={isUpdatingStatus}
+              disabled={isUpdatingStatus || currentHabit.status === HabitStatus.ARCHIVED}
               variant="outline"
             >
               Activate
@@ -171,7 +171,7 @@ export function HabitDetails({
           {currentHabit.status !== HabitStatus.PAUSED && (
             <Button
               onClick={() => handleUpdateStatus(HabitStatus.PAUSED)}
-              disabled={isUpdatingStatus}
+              disabled={isUpdatingStatus || currentHabit.status === HabitStatus.ARCHIVED}
               variant="outline"
             >
               Pause

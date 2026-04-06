@@ -35,11 +35,18 @@ export const authOptions: NextAuthOptions = {
           .sign(secret);
       }
 
+      if (user?.image) {
+        token.picture = user.image;
+      }
+
       return token;
     },
 
     async session({ session, token }) {
       session.user.jwt = token.jwt as string;
+      if (token.picture) {
+        session.user.image = token.picture as string;
+      }
       return session;
     },
   },

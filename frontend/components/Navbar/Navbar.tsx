@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useSession, signOut } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 
@@ -25,6 +26,15 @@ export function Navbar(): React.ReactElement | null {
         </div>
 
         <div className="flex items-center gap-3">
+          {session.user?.image && (
+            <Image
+              src={session.user.image}
+              alt={session.user?.name || "User avatar"}
+              width={32}
+              height={32}
+              className="rounded-full"
+            />
+          )}
           <span className="text-sm text-slate-500">{session.user?.name}</span>
           <Button
             variant="outline"

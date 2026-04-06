@@ -29,6 +29,18 @@ api.interceptors.request.use(
   }
 );
 
+// Response interceptor to extract error messages from backend
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.data?.message) {
+      const errorMessage = error.response.data.message;
+      return Promise.reject(new Error(errorMessage));
+    }
+    return Promise.reject(error);
+  }
+);
+
 // API functions
 export const apiClient = {
   // Users
