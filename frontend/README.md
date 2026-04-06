@@ -38,7 +38,7 @@ graph TD
     end
 
     Pages --> Components
-    Components --> APIClient -->|REST + JWT| Backend["Backend API :3001"]
+    Components --> APIClient -->|REST + JWT| Backend["Backend API :4000"]
     Components --> WSClient -->|WebSocket + JWT| Backend
     Pages --> AuthLib -->|NextAuth| OAuth["Google / GitHub"]
 ```
@@ -55,8 +55,8 @@ GOOGLE_CLIENT_SECRET=<your-google-client-secret>
 GITHUB_CLIENT_ID=<your-github-client-id>
 GITHUB_CLIENT_SECRET=<your-github-client-secret>
 DATABASE_URL=postgresql://user:password@localhost:5432/habittracker
-BACKEND_API_URL=http://localhost:3001/api
-WS_URL=ws://localhost:3001/notifications
+BACKEND_API_URL=http://localhost:4000/api
+WS_URL=ws://localhost:4000/notifications
 ```
 
 ## Development

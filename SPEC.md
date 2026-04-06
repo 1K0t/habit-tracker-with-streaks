@@ -122,7 +122,7 @@ Frontend includes token in headers:
 
 ### WebSocket handshake:
 
-    ws://localhost:3001/notifications?token=<jwt>
+    ws://localhost:4000/notifications?token=<jwt>
 
 ## 4.4 Backend Authorization
 
@@ -208,7 +208,7 @@ enum HabitStatus {
 
 Base URL (local):
 
-    http://localhost:3001/api
+    http://localhost:4000/api
 
 All endpoints require a valid JWT.
 
@@ -266,7 +266,7 @@ Included inside the GET `/habits` and GET `/habits/:id` (precomputed server-side
 
 ## Endpoint:
 
-    ws://localhost:3001/notifications?token=<jwt>
+    ws://localhost:4000/notifications?token=<jwt>
 
 ## 7.1 Client → Server
 
@@ -390,14 +390,14 @@ Milestones:
     GITHUB_CLIENT_ID=
     GITHUB_CLIENT_SECRET=
     DATABASE_URL=postgresql://...
-    BACKEND_API_URL=http://localhost:3001/api
-    WS_URL=ws://localhost:3001/notifications
+    BACKEND_API_URL=http://localhost:4000/api
+    WS_URL=ws://localhost:4000/notifications
 
 ## Backend
 
     DATABASE_URL=postgresql://...
     JWT_PUBLIC_KEY=...
-    PORT=3001
+    PORT=4000
 
 ---
 

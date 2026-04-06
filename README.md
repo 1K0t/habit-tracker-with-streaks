@@ -111,8 +111,8 @@ GOOGLE_CLIENT_SECRET=<your-google-client-secret>
 GITHUB_CLIENT_ID=<your-github-client-id>
 GITHUB_CLIENT_SECRET=<your-github-client-secret>
 DATABASE_URL=postgresql://user:password@localhost:5432/habittracker
-BACKEND_API_URL=http://localhost:3001/api
-WS_URL=ws://localhost:3001/notifications
+BACKEND_API_URL=http://localhost:4000/api
+WS_URL=ws://localhost:4000/notifications
 ```
 
 ### Backend (`backend/.env`)
@@ -120,7 +120,7 @@ WS_URL=ws://localhost:3001/notifications
 ```env
 DATABASE_URL=postgresql://user:password@localhost:5432/habittracker
 JWT_PUBLIC_KEY=<nextauth-jwt-public-key>
-PORT=3001
+PORT=4000
 ```
 
 ## Local Development Setup
@@ -165,7 +165,7 @@ yarn dev:backend prisma migrate dev
 In separate terminals:
 
 ```bash
-# Terminal 1 — Backend (http://localhost:3001)
+# Terminal 1 — Backend (http://localhost:4000)
 yarn dev:backend
 
 # Terminal 2 — Frontend (http://localhost:3000)

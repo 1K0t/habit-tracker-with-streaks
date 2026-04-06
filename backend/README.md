@@ -40,7 +40,7 @@ graph TD
 
 ## API Endpoints
 
-Base URL: `http://localhost:3000/api`
+Base URL: `http://localhost:4000/api`
 
 All endpoints require `Authorization: Bearer <jwt>`.
 
@@ -59,14 +59,14 @@ All endpoints require `Authorization: Bearer <jwt>`.
 Interactive API documentation is available via Swagger UI at:
 
 ```
-http://localhost:3001/api/docs
+http://localhost:4000/api/docs
 ```
 
 Auto-generated from controller decorators using `@nestjs/swagger`. All endpoints, request bodies, query parameters, and response schemas are documented.
 
 ## WebSocket
 
-Endpoint: `ws://localhost:3001/notifications?token=<jwt>`
+Endpoint: `ws://localhost:4000/notifications?token=<jwt>`
 
 | Direction        | Message                                                     |
 | ---------------- | ----------------------------------------------------------- |
@@ -81,7 +81,7 @@ Create `backend/.env`:
 ```env
 DATABASE_URL=postgresql://user:password@localhost:5432/habittracker
 JWT_PUBLIC_KEY=<nextauth-jwt-public-key>
-PORT=3001
+PORT=4000
 ```
 
 ## Development
@@ -95,7 +95,7 @@ cd backend
 yarn start:dev
 ```
 
-Runs on [http://localhost:3001](http://localhost:3001).
+Runs on [http://localhost:4000](http://localhost:4000).
 
 ## Prisma Commands
 
