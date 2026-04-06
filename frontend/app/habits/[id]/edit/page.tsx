@@ -1,8 +1,8 @@
-import { redirect, notFound } from "next/navigation";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
-import { fetchHabit } from "@/lib/api.server";
-import { EditHabitPageClient } from "@/components/EditHabitPageClient/EditHabitPageClient";
+import { redirect, notFound } from 'next/navigation';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
+import { fetchHabit } from '@/lib/api.server';
+import { EditHabitPageClient } from '@/components/EditHabitPageClient/EditHabitPageClient';
 
 interface EditHabitPageProps {
   params: Promise<{ id: string }>;
@@ -14,7 +14,7 @@ export default async function EditHabitPage({
   const session = await getServerSession(authOptions);
 
   if (!session) {
-    redirect("/");
+    redirect('/');
   }
 
   const { id } = await params;
@@ -25,7 +25,7 @@ export default async function EditHabitPage({
     habit = await fetchHabit(id);
   } catch (err) {
     const status = (err as { message?: string })?.message;
-    if (status?.includes("404")) {
+    if (status?.includes('404')) {
       notFound();
     }
     throw err;

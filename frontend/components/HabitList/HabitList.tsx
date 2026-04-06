@@ -11,7 +11,9 @@ export function HabitList({ habits }: HabitListProps): React.ReactNode {
   if (habits.length === 0) {
     return (
       <div className="rounded-lg border border-dashed border-gray-300 bg-gray-50 p-12 text-center">
-        <p className="text-gray-500">No habits yet. Create one to get started!</p>
+        <p className="text-gray-500">
+          No habits yet. Create one to get started!
+        </p>
       </div>
     );
   }

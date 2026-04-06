@@ -6,15 +6,18 @@ import {
   SubscribeMessage,
   MessageBody,
   ConnectedSocket,
-} from "@nestjs/websockets";
-import { Logger } from "@nestjs/common";
-import { Server, Socket } from "socket.io";
-import { JwtService } from "../auth/jwt.service";
-import { MilestoneNotification } from "@habit/shared";
+} from '@nestjs/websockets';
+import { Logger } from '@nestjs/common';
+import { Server, Socket } from 'socket.io';
+import { JwtService } from '../auth/jwt.service';
+import { MilestoneNotification } from '@habit/shared';
 
 @WebSocketGateway({
-  namespace: "/notifications",
-  cors: { origin: "*" },
+  namespace: '/notifications',
+  cors: {
+    origin: process.env.WS_CORS_ORIGIN || 'http://localhost:3000',
+    credentials: true,
+  },
 })
 export class WsGateway implements OnGatewayConnection, OnGatewayDisconnect {
   private readonly logger = new Logger(WsGateway.name);
@@ -31,7 +34,7 @@ export class WsGateway implements OnGatewayConnection, OnGatewayDisconnect {
       const token =
         client.handshake.auth?.token || client.handshake.query?.token;
 
-      if (!token || typeof token !== "string") {
+      if (!token || typeof token !== 'string') {
         this.logger.warn(`Client ${client.id} rejected: missing token`);
         client.disconnect();
         return;
@@ -64,16 +67,16 @@ export class WsGateway implements OnGatewayConnection, OnGatewayDisconnect {
     this.logger.log(`Client disconnected: ${client.id}`);
   }
 
-  @SubscribeMessage("subscribe")
+  @SubscribeMessage('subscribe')
   handleSubscribe(@ConnectedSocket() client: Socket): {
     event: string;
     data: { status: string };
   } {
     this.logger.debug(`Client ${client.id} subscribed`);
-    return { event: "subscribed", data: { status: "ok" } };
+    return { event: 'subscribed', data: { status: 'ok' } };
   }
 
-  @SubscribeMessage("ack")
+  @SubscribeMessage('ack')
   handleAck(
     @MessageBody() data: { milestoneId: string },
     @ConnectedSocket() client: Socket,
@@ -86,7 +89,7 @@ export class WsGateway implements OnGatewayConnection, OnGatewayDisconnect {
     if (!socketIds) return;
 
     for (const socketId of socketIds) {
-      this.server.to(socketId).emit("milestone", notification);
+      this.server.to(socketId).emit('milestone', notification);
     }
   }
 }

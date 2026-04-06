@@ -16,7 +16,10 @@ export default function HabitDetailLoading(): React.ReactNode {
       {/* Stats */}
       <div className="grid grid-cols-3 gap-4">
         {Array.from({ length: 3 }).map((_, i) => (
-          <div key={i} className="rounded-lg border border-slate-200 bg-slate-50 p-4 space-y-2">
+          <div
+            key={i}
+            className="rounded-lg border border-slate-200 bg-slate-50 p-4 space-y-2"
+          >
             <div className="h-4 w-24 rounded bg-slate-200" />
             <div className="h-8 w-12 rounded bg-slate-200" />
           </div>

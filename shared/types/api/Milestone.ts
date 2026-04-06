@@ -1,5 +1,5 @@
 export interface MilestoneNotification {
-  type: "milestone";
+  type: 'milestone';
   habitId: string;
   milestone: number;
   timestamp: string;

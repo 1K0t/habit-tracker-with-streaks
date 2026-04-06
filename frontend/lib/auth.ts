@@ -1,7 +1,7 @@
-import type { NextAuthOptions } from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
-import GitHubProvider from "next-auth/providers/github";
-import { SignJWT } from "jose";
+import type { NextAuthOptions } from 'next-auth';
+import GoogleProvider from 'next-auth/providers/google';
+import GitHubProvider from 'next-auth/providers/github';
+import { SignJWT } from 'jose';
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -16,20 +16,20 @@ export const authOptions: NextAuthOptions = {
   ],
 
   session: {
-    strategy: "jwt",
+    strategy: 'jwt',
   },
 
   callbacks: {
     async jwt({ token, user }) {
       if (user?.email) {
         const secret = new TextEncoder().encode(process.env.JWT_SECRET!);
-        const expiresIn = process.env.JWT_EXPIRES_IN ?? "1d";
+        const expiresIn = process.env.JWT_EXPIRES_IN ?? '1d';
 
         token.jwt = await new SignJWT({
           email: user.email,
           name: user.name,
         })
-          .setProtectedHeader({ alg: "HS256" })
+          .setProtectedHeader({ alg: 'HS256' })
           .setSubject(user.email)
           .setExpirationTime(expiresIn)
           .sign(secret);

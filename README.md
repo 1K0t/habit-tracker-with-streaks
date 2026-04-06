@@ -13,12 +13,12 @@ A multi-user full-stack application for tracking daily habits, recording check-i
 
 ## Tech Stack
 
-| Layer    | Technology                                               |
-| -------- | -------------------------------------------------------- |
-| Frontend | Next.js 15+, React, TypeScript, NextAuth.js, TailwindCSS |
-| Backend  | NestJS, Fastify, Socket.IO, Prisma ORM                   |
-| Database | PostgreSQL                                               |
-| Shared   | TypeScript types, DTOs, utilities                        |
+| Layer    | Technology                                                 |
+| -------- | ---------------------------------------------------------- |
+| Frontend | Next.js 16, React 19, TypeScript, NextAuth.js, TailwindCSS |
+| Backend  | NestJS, Fastify, Socket.IO, Prisma ORM                     |
+| Database | PostgreSQL                                                 |
+| Shared   | TypeScript types, DTOs, utilities                          |
 
 ## Architecture
 
@@ -135,7 +135,6 @@ DATABASE_URL=postgresql://user:password@localhost:5432/habittracker
 
 # JWT — verifies tokens issued by the frontend (MUST match frontend JWT_SECRET)
 JWT_SECRET=<shared-jwt-secret>
-JWT_EXPIRES_IN=1d
 
 PORT=4000
 ```

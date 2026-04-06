@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { HabitStatus } from "@habit/shared";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { HabitStatus } from '@habit/shared';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
-export type FilterOption = "ALL" | HabitStatus;
+export type FilterOption = 'ALL' | HabitStatus;
 
 interface FiltersProps {
   selectedFilter: FilterOption;
@@ -12,10 +12,10 @@ interface FiltersProps {
 }
 
 const FILTER_OPTIONS: { label: string; value: FilterOption }[] = [
-  { label: "All", value: "ALL" },
-  { label: "Active", value: HabitStatus.ACTIVE },
-  { label: "Paused", value: HabitStatus.PAUSED },
-  { label: "Archived", value: HabitStatus.ARCHIVED },
+  { label: 'All', value: 'ALL' },
+  { label: 'Active', value: HabitStatus.ACTIVE },
+  { label: 'Paused', value: HabitStatus.PAUSED },
+  { label: 'Archived', value: HabitStatus.ARCHIVED },
 ];
 
 export function Filters({
@@ -27,14 +27,14 @@ export function Filters({
       {FILTER_OPTIONS.map((option) => (
         <Button
           key={option.value}
-          variant={selectedFilter === option.value ? "default" : "outline"}
+          variant={selectedFilter === option.value ? 'default' : 'outline'}
           size="sm"
           onClick={() => onFilterChange(option.value)}
           className={cn(
-            "transition-colors",
+            'transition-colors',
             selectedFilter === option.value
-              ? "bg-slate-900 text-white hover:bg-slate-800"
-              : "text-slate-700 hover:bg-slate-100"
+              ? 'bg-slate-900 text-white hover:bg-slate-800'
+              : 'text-slate-700 hover:bg-slate-100',
           )}
         >
           {option.label}

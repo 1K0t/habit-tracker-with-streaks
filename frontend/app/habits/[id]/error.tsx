@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useEffect } from "react";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { useEffect } from 'react';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 interface ErrorProps {
   error: Error & { digest?: string };
@@ -24,7 +24,7 @@ export default function HabitDetailError({
           Failed to load habit
         </h2>
         <p className="text-sm text-red-600">
-          {error.message || "Something went wrong. Please try again."}
+          {error.message || 'Something went wrong. Please try again.'}
         </p>
         <div className="flex justify-center gap-3">
           <Button onClick={reset} variant="outline">

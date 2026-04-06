@@ -5,13 +5,13 @@
  * Usage: node utils/generate-jwt.js --userId=user-123 --secret=test-secret
  */
 
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken');
 
 function parseArgs() {
   const args = {};
   process.argv.slice(2).forEach((arg) => {
-    const [key, value] = arg.split("=");
-    args[key.replace("--", "")] = value;
+    const [key, value] = arg.split('=');
+    args[key.replace('--', '')] = value;
   });
   return args;
 }
@@ -21,7 +21,7 @@ function main() {
 
   if (!args.userId || !args.secret) {
     console.error(
-      "Error: Missing required arguments\nUsage: node generate-jwt.js --userId=<id> --secret=<secret>",
+      'Error: Missing required arguments\nUsage: node generate-jwt.js --userId=<id> --secret=<secret>',
     );
     process.exit(1);
   }
@@ -29,10 +29,10 @@ function main() {
   const payload = {
     sub: args.userId,
     email: `${args.userId}@test.local`,
-    name: "Test User",
+    name: 'Test User',
   };
 
-  const token = jwt.sign(payload, args.secret, { expiresIn: "1h" });
+  const token = jwt.sign(payload, args.secret, { expiresIn: '1h' });
   const bearerToken = `Bearer ${token}`;
 
   console.log(bearerToken);

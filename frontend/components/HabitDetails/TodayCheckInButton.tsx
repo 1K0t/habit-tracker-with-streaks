@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { apiClient } from "@/lib/api";
-import { cn } from "@/lib/utils";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { apiClient } from '@/lib/api';
+import { cn } from '@/lib/utils';
 
 interface TodayCheckInButtonProps {
   habitId: string;
@@ -33,7 +33,7 @@ export function TodayCheckInButton({
       }
     } catch (err) {
       const errorMessage =
-        err instanceof Error ? err.message : "Failed to update check-in";
+        err instanceof Error ? err.message : 'Failed to update check-in';
       setError(errorMessage);
     } finally {
       setIsLoading(false);
@@ -45,19 +45,19 @@ export function TodayCheckInButton({
       <Button
         onClick={handleToggleCheckIn}
         disabled={isLoading}
-        variant={isCheckedInToday ? "default" : "outline"}
+        variant={isCheckedInToday ? 'default' : 'outline'}
         size="lg"
         className={cn(
-          "transition-all",
+          'transition-all',
           isCheckedInToday
-            ? "bg-green-600 text-white hover:bg-green-700"
-            : "text-slate-700 hover:bg-slate-100"
+            ? 'bg-green-600 text-white hover:bg-green-700'
+            : 'text-slate-700 hover:bg-slate-100',
         )}
       >
         {isLoading ? (
           <span className="flex items-center gap-2">
             <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
-            {isCheckedInToday ? "Undoing..." : "Checking in..."}
+            {isCheckedInToday ? 'Undoing...' : 'Checking in...'}
           </span>
         ) : (
           <span className="flex items-center gap-2">

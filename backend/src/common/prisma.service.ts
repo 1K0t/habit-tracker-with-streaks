@@ -3,8 +3,8 @@ import {
   Logger,
   OnModuleInit,
   OnModuleDestroy,
-} from "@nestjs/common";
-import { PrismaClient } from "@prisma/client";
+} from '@nestjs/common';
+import { PrismaClient } from '@prisma/client';
 
 @Injectable()
 export class PrismaService
@@ -15,11 +15,11 @@ export class PrismaService
 
   async onModuleInit(): Promise<void> {
     await this.$connect();
-    this.logger.log("Database connection established");
+    this.logger.log('Database connection established');
   }
 
   async onModuleDestroy(): Promise<void> {
     await this.$disconnect();
-    this.logger.log("Database connection closed");
+    this.logger.log('Database connection closed');
   }
 }

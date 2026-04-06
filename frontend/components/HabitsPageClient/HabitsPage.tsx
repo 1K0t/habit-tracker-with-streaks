@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import Link from "next/link";
-import type { Habit } from "@habit/shared";
-import { useHabits } from "@/hooks/useHabits";
-import { SearchInput } from "@/components/SearchInput/SearchInput";
-import { Filters, type FilterOption } from "@/components/Filters/Filters";
-import { HabitList } from "@/components/HabitList/HabitList";
-import { Button } from "@/components/ui/button";
+import { useState } from 'react';
+import Link from 'next/link';
+import type { Habit } from '@habit/shared';
+import { useHabits } from '@/hooks/useHabits';
+import { SearchInput } from '@/components/SearchInput/SearchInput';
+import { Filters, type FilterOption } from '@/components/Filters/Filters';
+import { HabitList } from '@/components/HabitList/HabitList';
+import { Button } from '@/components/ui/button';
 
 interface HabitsPageClientProps {
   initialHabits: Habit[];
@@ -18,8 +18,8 @@ export function HabitsPageClient({
   initialHabits,
   error,
 }: HabitsPageClientProps): React.ReactNode {
-  const [searchTerm, setSearchTerm] = useState<string>("");
-  const [selectedFilter, setSelectedFilter] = useState<FilterOption>("ALL");
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [selectedFilter, setSelectedFilter] = useState<FilterOption>('ALL');
 
   const { habits } = useHabits(initialHabits);
 
@@ -28,7 +28,7 @@ export function HabitsPageClient({
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
     const matchesFilter =
-      selectedFilter === "ALL" || habit.status === selectedFilter;
+      selectedFilter === 'ALL' || habit.status === selectedFilter;
     return matchesSearch && matchesFilter;
   });
 

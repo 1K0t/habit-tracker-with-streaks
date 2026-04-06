@@ -1,1 +1,1 @@
-export * from "./HabbitStatus";
+export * from './HabitStatus';

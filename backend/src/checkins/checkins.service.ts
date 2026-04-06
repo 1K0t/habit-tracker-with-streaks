@@ -5,14 +5,14 @@ import {
   ForbiddenException,
   BadRequestException,
   ConflictException,
-} from "@nestjs/common";
-import { HabitStatus } from "@prisma/client";
-import { PrismaService } from "../common/prisma.service";
-import { getTodayISO, toStartOfDay } from "../common/utils/date.utils";
-import { calculateCurrentStreak } from "../common/utils/streak.utils";
-import { MilestonesService } from "../milestones/milestones.service";
-import { WsGateway } from "../websocket/ws.gateway";
-import type { CheckIn } from "@habit/shared";
+} from '@nestjs/common';
+import { HabitStatus } from '@prisma/client';
+import { PrismaService } from '../common/prisma.service';
+import { getTodayISO, toStartOfDay } from '../common/utils/date.utils';
+import { calculateCurrentStreak } from '@habit/shared';
+import { MilestonesService } from '../milestones/milestones.service';
+import { WsGateway } from '../websocket/ws.gateway';
+import type { CheckIn } from '@habit/shared';
 
 @Injectable()
 export class CheckInsService {
@@ -33,7 +33,7 @@ export class CheckInsService {
     });
 
     if (existing) {
-      throw new ConflictException("Already checked in today");
+      throw new ConflictException('Already checked in today');
     }
 
     await this.prisma.checkIn.create({
@@ -57,7 +57,7 @@ export class CheckInsService {
 
     if (milestoneTriggered) {
       this.wsGateway.sendMilestone(habit.userId, {
-        type: "milestone",
+        type: 'milestone',
         habitId,
         milestone: milestoneTriggered,
         timestamp: new Date().toISOString(),
@@ -77,22 +77,22 @@ export class CheckInsService {
     });
 
     if (!habit) {
-      throw new NotFoundException("Habit not found");
+      throw new NotFoundException('Habit not found');
     }
 
     if (habit.userId !== userId) {
-      throw new ForbiddenException("Access denied");
+      throw new ForbiddenException('Access denied');
     }
 
     const checkIns = await this.prisma.checkIn.findMany({
       where: { habitId },
-      orderBy: { date: "asc" },
+      orderBy: { date: 'asc' },
     });
 
     return checkIns.map((c) => ({
       id: c.id,
       habitId: c.habitId,
-      date: c.date.toISOString().split("T")[0],
+      date: c.date.toISOString().split('T')[0],
     }));
   }
 
@@ -105,7 +105,7 @@ export class CheckInsService {
     });
 
     if (!existing) {
-      throw new NotFoundException("No check-in found for today");
+      throw new NotFoundException('No check-in found for today');
     }
 
     await this.prisma.checkIn.delete({
@@ -122,15 +122,15 @@ export class CheckInsService {
     });
 
     if (!habit) {
-      throw new NotFoundException("Habit not found");
+      throw new NotFoundException('Habit not found');
     }
 
     if (habit.userId !== userId) {
-      throw new ForbiddenException("Access denied");
+      throw new ForbiddenException('Access denied');
     }
 
     if (habit.status !== HabitStatus.ACTIVE) {
-      throw new BadRequestException("Can only check in to active habits");
+      throw new BadRequestException('Can only check in to active habits');
     }
 
     return habit;

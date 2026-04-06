@@ -7,11 +7,12 @@
     "start:dev": "nest start --watch",
     "start:prod": "node dist/main.js",
     "build": "nest build",
-    "lint": "eslint ./src --ext .ts",
-    "test": "echo \"No backend tests yet\"",
+    "lint": "eslint ./src",
+    "test": "echo \"Should implement tests\"",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:studio": "prisma studio",
+    "format": "prettier --write --ignore-path ../.prettierignore .",
     "jwt:generate": "node utils/generate-jwt.js"
   },
   "dependencies": {
@@ -27,6 +28,7 @@
     "@prisma/client": "^5.11.0",
     "bcryptjs": "^2.4.3",
     "dotenv": "^17.4.1",
+    "express": "^5.2.1",
     "fastify": "^4.26.2",
     "jsonwebtoken": "^9.0.2",
     "prisma": "^5.11.0",
@@ -45,6 +47,7 @@
     "eslint-config-prettier": "^9.1.0",
     "prettier": "^3.8.1",
     "ts-node": "^10.9.2",
-    "typescript": "^6.0.2"
+    "typescript": "^6.0.2",
+    "typescript-eslint": "^8.58.0"
   }
 }

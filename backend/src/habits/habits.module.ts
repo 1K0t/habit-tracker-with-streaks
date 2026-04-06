@@ -1,8 +1,8 @@
-import { Module } from "@nestjs/common";
-import { HabitsService } from "./habits.service";
-import { HabitsController } from "./habits.controller";
-import { PrismaService } from "../common/prisma.service";
-import { JwtAuthGuard } from "../common/guards";
+import { Module } from '@nestjs/common';
+import { HabitsService } from './habits.service';
+import { HabitsController } from './habits.controller';
+import { PrismaService } from '../common/prisma.service';
+import { JwtAuthGuard } from '../common/guards';
 
 @Module({
   controllers: [HabitsController],

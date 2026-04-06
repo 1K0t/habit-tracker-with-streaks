@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import type { CreateHabitDto } from "@habit/shared";
-import { apiClient } from "@/lib/api";
-import { HabitForm } from "@/components/HabitForm/HabitForm";
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import type { CreateHabitDto } from '@habit/shared';
+import { apiClient } from '@/lib/api';
+import { HabitForm } from '@/components/HabitForm/HabitForm';
 
 export function CreateHabitPageClient(): React.ReactNode {
   const router = useRouter();
@@ -16,10 +16,12 @@ export function CreateHabitPageClient(): React.ReactNode {
     setSubmitError(undefined);
     try {
       await apiClient.createHabit(dto);
-      router.push("/habits");
+      router.push('/habits');
     } catch (err) {
       const message =
-        err instanceof Error ? err.message : "Failed to create habit. Please try again.";
+        err instanceof Error
+          ? err.message
+          : 'Failed to create habit. Please try again.';
       setSubmitError(message);
       setIsLoading(false);
     }

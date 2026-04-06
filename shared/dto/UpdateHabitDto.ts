@@ -1,4 +1,4 @@
-import { HabitStatus } from "../types/domain";
+import { HabitStatus } from '../types/domain';
 
 export interface UpdateHabitDto {
   name?: string;

@@ -1,48 +1,48 @@
-import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 // ── Request DTOs ──────────────────────────────────────────────
 
 export class CreateHabitBodyDto {
-  @ApiProperty({ example: "Drink Water" })
+  @ApiProperty({ example: 'Drink Water' })
   name: string;
 
-  @ApiPropertyOptional({ example: "8 glasses per day" })
+  @ApiPropertyOptional({ example: '8 glasses per day' })
   description?: string;
 
-  @ApiProperty({ example: "2026-04-03" })
+  @ApiProperty({ example: '2026-04-03' })
   startDate: string;
 }
 
 export class UpdateHabitBodyDto {
-  @ApiPropertyOptional({ example: "Drink Water" })
+  @ApiPropertyOptional({ example: 'Drink Water' })
   name?: string;
 
-  @ApiPropertyOptional({ example: "8 glasses per day" })
+  @ApiPropertyOptional({ example: '8 glasses per day' })
   description?: string;
 
-  @ApiPropertyOptional({ enum: ["ACTIVE", "PAUSED", "ARCHIVED"] })
+  @ApiPropertyOptional({ enum: ['ACTIVE', 'PAUSED', 'ARCHIVED'] })
   status?: string;
 }
 
 // ── Response DTOs ─────────────────────────────────────────────
 
 export class HabitResponseDto {
-  @ApiProperty({ example: "clxyz123" })
+  @ApiProperty({ example: 'clxyz123' })
   id: string;
 
-  @ApiProperty({ example: "user_456" })
+  @ApiProperty({ example: 'user_456' })
   userId: string;
 
-  @ApiProperty({ example: "Drink Water" })
+  @ApiProperty({ example: 'Drink Water' })
   name: string;
 
-  @ApiPropertyOptional({ example: "8 glasses per day" })
+  @ApiPropertyOptional({ example: '8 glasses per day' })
   description: string | null;
 
-  @ApiProperty({ example: "2026-04-03T00:00:00.000Z" })
+  @ApiProperty({ example: '2026-04-03T00:00:00.000Z' })
   startDate: Date;
 
-  @ApiProperty({ enum: ["ACTIVE", "PAUSED", "ARCHIVED"], example: "ACTIVE" })
+  @ApiProperty({ enum: ['ACTIVE', 'PAUSED', 'ARCHIVED'], example: 'ACTIVE' })
   status: string;
 
   @ApiProperty({ example: 5 })
@@ -65,26 +65,40 @@ export class CheckInTodayResponseDto {
   @ApiProperty({
     example: 3,
     nullable: true,
-    description: "3, 7, or 30 — null if no milestone",
+    description: '3, 7, or 30 — null if no milestone',
   })
   milestoneTriggered: number | null;
 }
 
 export class UserProfileDto {
-  @ApiProperty({ example: "user_456" })
+  @ApiProperty({ example: 'user_456' })
   id: string;
 
-  @ApiPropertyOptional({ example: "John Doe" })
+  @ApiPropertyOptional({ example: 'John Doe' })
   name: string | null;
 
-  @ApiPropertyOptional({ example: "john@example.com" })
+  @ApiPropertyOptional({ example: 'john@example.com' })
   email: string | null;
 
-  @ApiPropertyOptional({ example: "https://example.com/avatar.png" })
+  @ApiPropertyOptional({ example: 'https://example.com/avatar.png' })
   image: string | null;
 }
 
 export class SuccessResponseDto {
   @ApiProperty({ example: true })
   success: boolean;
+}
+
+export class ErrorResponseDto {
+  @ApiProperty({ example: 'BAD_REQUEST' })
+  error: string;
+
+  @ApiProperty({ example: 'Invalid input data' })
+  message: string;
+
+  @ApiProperty({ example: 400 })
+  statusCode: number;
+
+  @ApiProperty({ example: '2026-04-06T10:00:00.000Z' })
+  timestamp: string;
 }

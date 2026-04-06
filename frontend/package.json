@@ -6,8 +6,8 @@
     "dev": "next dev -p 3000",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "format": "prettier --write .",
+    "lint": "eslint .",
+    "format": "prettier --write --ignore-path ../.prettierignore .",
     "test": "echo \"No frontend tests configured yet\""
   },
   "dependencies": {

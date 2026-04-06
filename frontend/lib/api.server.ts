@@ -1,12 +1,12 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
-import type { Habit, CheckIn, GetHabitsParams } from "@habit/shared";
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
+import type { Habit, CheckIn, GetHabitsParams } from '@habit/shared';
 
 const API_URL = process.env.BACKEND_API_URL;
 
 async function serverFetch<T>(
   path: string,
-  params?: Record<string, string | boolean | undefined>
+  params?: Record<string, string | boolean | undefined>,
 ): Promise<T> {
   const session = await getServerSession(authOptions);
   const token = session?.user?.jwt;
@@ -20,18 +20,25 @@ async function serverFetch<T>(
 
   const res = await fetch(url.toString(), {
     headers: { Authorization: `Bearer ${token}` },
-    cache: "no-store",
+    cache: 'no-store',
   });
 
   if (!res.ok) {
-    throw new Error(`API error: ${res.status}`);
+    let message = `API error: ${res.status}`;
+    try {
+      const body = await res.json();
+      if (body?.message) message = body.message;
+    } catch {
+      // Ignore JSON parse errors
+    }
+    throw new Error(message);
   }
 
   return res.json() as Promise<T>;
 }
 
 export async function fetchHabits(params?: GetHabitsParams): Promise<Habit[]> {
-  return serverFetch<Habit[]>("/habits", params as Record<string, string>);
+  return serverFetch<Habit[]>('/habits', params as Record<string, string>);
 }
 
 export async function fetchHabit(id: string): Promise<Habit> {

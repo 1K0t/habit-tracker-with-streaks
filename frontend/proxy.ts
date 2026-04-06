@@ -1,6 +1,6 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
-import { getToken } from "next-auth/jwt";
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
+import { getToken } from 'next-auth/jwt';
 
 export async function proxy(request: NextRequest): Promise<NextResponse> {
   const token = await getToken({
@@ -9,7 +9,7 @@ export async function proxy(request: NextRequest): Promise<NextResponse> {
   });
 
   if (!token) {
-    const loginUrl = new URL("/", request.url);
+    const loginUrl = new URL('/', request.url);
     return NextResponse.redirect(loginUrl);
   }
 
@@ -17,5 +17,5 @@ export async function proxy(request: NextRequest): Promise<NextResponse> {
 }
 
 export const config = {
-  matcher: ["/habits", "/habits/:path*"],
+  matcher: ['/habits', '/habits/:path*'],
 };

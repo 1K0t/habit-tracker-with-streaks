@@ -3,9 +3,9 @@
     "composite": true,
     "declaration": true,
     "declarationMap": false,
-    "emitDeclarationOnly": true,
+    "emitDeclarationOnly": false,
     "strict": true,
-    "module": "ESNext",
+    "module": "CommonJS",
     "target": "ES2021",
     "moduleResolution": "node",
     "resolveJsonModule": true,
@@ -13,5 +13,5 @@
     "outDir": "./dist"
   },
   "include": ["**/*.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "dist"]
 }

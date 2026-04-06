@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import Link from "next/link";
-import type { UpdateHabitDto } from "@habit/shared";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
+import { useState } from 'react';
+import Link from 'next/link';
+import type { UpdateHabitDto } from '@habit/shared';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { cn } from '@/lib/utils';
 
 interface EditHabitFormProps {
   initialValues: { name: string; description?: string };
@@ -26,19 +26,19 @@ export function EditHabitForm({
 }: EditHabitFormProps): React.ReactNode {
   const [name, setName] = useState<string>(initialValues.name);
   const [description, setDescription] = useState<string>(
-    initialValues.description ?? ""
+    initialValues.description ?? '',
   );
   const [errors, setErrors] = useState<FormErrors>({});
 
   function validate(): boolean {
     const newErrors: FormErrors = {};
-    if (!name.trim()) newErrors.name = "Name is required";
+    if (!name.trim()) newErrors.name = 'Name is required';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   }
 
   async function handleSubmit(
-    e: React.FormEvent<HTMLFormElement>
+    e: React.FormEvent<HTMLFormElement>,
   ): Promise<void> {
     e.preventDefault();
     if (!validate()) return;
@@ -62,12 +62,10 @@ export function EditHabitForm({
           placeholder="e.g. Morning run"
           disabled={isLoading}
           className={cn(
-            errors.name && "border-red-500 focus-visible:ring-red-500"
+            errors.name && 'border-red-500 focus-visible:ring-red-500',
           )}
         />
-        {errors.name && (
-          <p className="text-sm text-red-600">{errors.name}</p>
-        )}
+        {errors.name && <p className="text-sm text-red-600">{errors.name}</p>}
       </div>
 
       <div className="space-y-2">
@@ -90,7 +88,7 @@ export function EditHabitForm({
 
       <div className="flex gap-3">
         <Button type="submit" disabled={isLoading}>
-          {isLoading ? "Saving..." : "Save Changes"}
+          {isLoading ? 'Saving...' : 'Save Changes'}
         </Button>
         <Button type="button" variant="outline" asChild disabled={isLoading}>
           <Link href={cancelHref}>Cancel</Link>

@@ -1,5 +1,5 @@
-import { Injectable, Logger } from "@nestjs/common";
-import { PrismaService } from "../common/prisma.service";
+import { Injectable, Logger } from '@nestjs/common';
+import { PrismaService } from '../common/prisma.service';
 
 const MILESTONES = [3, 7, 30];
 

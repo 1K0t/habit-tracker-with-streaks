@@ -4,14 +4,15 @@ import {
   NotFoundException,
   ForbiddenException,
   BadRequestException,
-} from "@nestjs/common";
-import { Habit, HabitStatus } from "@prisma/client";
-import { PrismaService } from "../common/prisma.service";
+} from '@nestjs/common';
+import { Habit, HabitStatus } from '@prisma/client';
+import { PrismaService } from '../common/prisma.service';
 import {
+  CreateHabitDto,
+  UpdateHabitDto,
   calculateCurrentStreak,
   calculateBestStreak,
-} from "../common/utils/streak.utils";
-import { CreateHabitDto, UpdateHabitDto } from "@habit/shared";
+} from '@habit/shared';
 
 export interface HabitWithStreaks {
   id: string;
@@ -67,13 +68,13 @@ export class HabitsService {
     }
 
     if (filters.search) {
-      where.name = { contains: filters.search, mode: "insensitive" };
+      where.name = { contains: filters.search, mode: 'insensitive' };
     }
 
     const habits = await this.prisma.habit.findMany({
       where,
       include: { checkIns: true },
-      orderBy: { startDate: "desc" },
+      orderBy: { startDate: 'desc' },
     });
 
     let results = habits.map((h) => this.toHabitWithStreaks(h, h.checkIns));
@@ -96,7 +97,7 @@ export class HabitsService {
 
   async findOne(userId: string, habitId: string): Promise<HabitWithStreaks> {
     this.logger.log(
-      `Retriving habit by id: "${habitId}" for user: "${userId}".`,
+      `Retrieving habit by id: "${habitId}" for user: "${userId}".`,
     );
     const habit = await this.prisma.habit.findUnique({
       where: { id: habitId },
@@ -104,11 +105,11 @@ export class HabitsService {
     });
 
     if (!habit) {
-      throw new NotFoundException("Habit not found");
+      throw new NotFoundException('Habit not found');
     }
 
     if (habit.userId !== userId) {
-      throw new ForbiddenException("Access denied");
+      throw new ForbiddenException('Access denied');
     }
 
     return this.toHabitWithStreaks(habit, habit.checkIns);
@@ -125,7 +126,7 @@ export class HabitsService {
     const habit = await this.findOwnedHabit(userId, habitId);
 
     if (habit.status === HabitStatus.ARCHIVED) {
-      throw new BadRequestException("Cannot update an archived habit");
+      throw new BadRequestException('Cannot update an archived habit');
     }
 
     const updated = await this.prisma.habit.update({
@@ -138,7 +139,7 @@ export class HabitsService {
       include: { checkIns: true },
     });
 
-    this.logger.debug(`Habit updated: ${habitId} sucessfully.`);
+    this.logger.debug(`Habit updated: ${habitId} successfully.`);
     return this.toHabitWithStreaks(updated, updated.checkIns);
   }
 
@@ -158,19 +159,16 @@ export class HabitsService {
     userId: string,
     habitId: string,
   ): Promise<Habit> {
-    this.logger.log(
-      `Retriving unique habit by id: "${habitId}" for user: "${userId}".`,
-    );
     const habit = await this.prisma.habit.findUnique({
       where: { id: habitId },
     });
 
     if (!habit) {
-      throw new NotFoundException("Habit not found");
+      throw new NotFoundException('Habit not found');
     }
 
     if (habit.userId !== userId) {
-      throw new ForbiddenException("Access denied");
+      throw new ForbiddenException('Access denied');
     }
 
     return habit;

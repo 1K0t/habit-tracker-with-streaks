@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { signIn } from "next-auth/react";
-import { Button } from "@/components/ui/button";
+import { signIn } from 'next-auth/react';
+import { Button } from '@/components/ui/button';
 
 export function LoginPage(): React.ReactElement {
   return (
@@ -17,21 +17,21 @@ export function LoginPage(): React.ReactElement {
         <div className="space-y-3 pt-2">
           <Button
             className="w-full cursor-pointer hover:bg-slate-700 hover:text-white transition-colors"
-            onClick={() => signIn("google", { callbackUrl: "/habits" })}
+            onClick={() => signIn('google', { callbackUrl: '/habits' })}
           >
             Sign in with Google
           </Button>
 
           <div className="flex items-center gap-3">
-            <hr className="flex-1" style={{ borderTop: "1px solid #e2e8f0" }} />
+            <hr className="flex-1" style={{ borderTop: '1px solid #e2e8f0' }} />
             <span className="text-sm text-slate-400">or</span>
-            <hr className="flex-1" style={{ borderTop: "1px solid #e2e8f0" }} />
+            <hr className="flex-1" style={{ borderTop: '1px solid #e2e8f0' }} />
           </div>
 
           <Button
             variant="outline"
             className="w-full cursor-pointer hover:bg-slate-100 transition-colors"
-            onClick={() => signIn("github", { callbackUrl: "/habits" })}
+            onClick={() => signIn('github', { callbackUrl: '/habits' })}
           >
             Sign in with GitHub
           </Button>

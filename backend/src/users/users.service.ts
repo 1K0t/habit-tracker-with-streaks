@@ -1,6 +1,6 @@
-import { Injectable, Logger, NotFoundException } from "@nestjs/common";
-import { User } from "@prisma/client";
-import { PrismaService } from "../common/prisma.service";
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { User } from '@prisma/client';
+import { PrismaService } from '../common/prisma.service';
 
 @Injectable()
 export class UsersService {
@@ -17,7 +17,7 @@ export class UsersService {
 
     if (!user) {
       this.logger.warn(`User not found: ${userId}`);
-      throw new NotFoundException("User not found");
+      throw new NotFoundException('User not found');
     }
 
     return user;

@@ -34,7 +34,7 @@ export function HabitCard({ habit }: HabitCardProps): React.ReactNode {
           <span
             className={cn(
               'inline-flex items-center rounded-full px-3 py-1 text-sm font-medium',
-              statusConfig_.className
+              statusConfig_.className,
             )}
           >
             {statusConfig_.label}

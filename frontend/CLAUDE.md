@@ -88,7 +88,7 @@ BACKEND_API_URL                   → used by lib/api.server.ts
 DATABASE_URL
 ```
 
-### Client-accessible (NEXT_PUBLIC_ prefix required):
+### Client-accessible (NEXT*PUBLIC* prefix required):
 
 ```
 NEXT_PUBLIC_WS_URL                → WebSocket endpoint for Socket.IO

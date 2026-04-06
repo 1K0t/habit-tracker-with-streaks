@@ -1,22 +1,22 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
-import type { Habit, CheckIn } from "@habit/shared";
-import { HabitStatus } from "@habit/shared";
-import { Button } from "@/components/ui/button";
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import type { Habit, CheckIn } from '@habit/shared';
+import { HabitStatus } from '@habit/shared';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogFooter,
-} from "@/components/ui/dialog";
-import { CalendarView } from "@/components/CalendarView/CalendarView";
-import { TodayCheckInButton } from "@/components/HabitDetails/TodayCheckInButton";
-import { apiClient } from "@/lib/api";
-import { cn } from "@/lib/utils";
+} from '@/components/ui/dialog';
+import { CalendarView } from '@/components/CalendarView/CalendarView';
+import { TodayCheckInButton } from '@/components/HabitDetails/TodayCheckInButton';
+import { apiClient } from '@/lib/api';
+import { cn } from '@/lib/utils';
 
 interface HabitDetailsProps {
   habit: Habit;
@@ -35,9 +35,8 @@ export function HabitDetails({
   const [isUpdatingStatus, setIsUpdatingStatus] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [currentHabit, setCurrentHabit] = useState<Habit>(habit);
-  const [currentCheckedIn, setCurrentCheckedIn] = useState<boolean>(
-    isCheckedInToday
-  );
+  const [currentCheckedIn, setCurrentCheckedIn] =
+    useState<boolean>(isCheckedInToday);
 
   async function handleUpdateStatus(newStatus: HabitStatus): Promise<void> {
     try {
@@ -49,7 +48,7 @@ export function HabitDetails({
       setCurrentHabit(updated);
     } catch (err) {
       const errorMessage =
-        err instanceof Error ? err.message : "Failed to update habit";
+        err instanceof Error ? err.message : 'Failed to update habit';
       setError(errorMessage);
     } finally {
       setIsUpdatingStatus(false);
@@ -61,10 +60,10 @@ export function HabitDetails({
       setIsDeleting(true);
       setError(null);
       await apiClient.deleteHabit(habit.id);
-      router.push("/habits");
+      router.push('/habits');
     } catch (err) {
       const errorMessage =
-        err instanceof Error ? err.message : "Failed to delete habit";
+        err instanceof Error ? err.message : 'Failed to delete habit';
       setError(errorMessage);
       setShowDeleteDialog(false);
     } finally {
@@ -93,12 +92,12 @@ export function HabitDetails({
           </div>
           <span
             className={cn(
-              "rounded-full px-3 py-1 text-sm font-medium",
+              'rounded-full px-3 py-1 text-sm font-medium',
               currentHabit.status === HabitStatus.ACTIVE
-                ? "bg-green-100 text-green-800"
+                ? 'bg-green-100 text-green-800'
                 : currentHabit.status === HabitStatus.PAUSED
-                  ? "bg-yellow-100 text-yellow-800"
-                  : "bg-slate-100 text-slate-800"
+                  ? 'bg-yellow-100 text-yellow-800'
+                  : 'bg-slate-100 text-slate-800',
             )}
           >
             {currentHabit.status}
@@ -162,7 +161,9 @@ export function HabitDetails({
           {currentHabit.status !== HabitStatus.ACTIVE && (
             <Button
               onClick={() => handleUpdateStatus(HabitStatus.ACTIVE)}
-              disabled={isUpdatingStatus || currentHabit.status === HabitStatus.ARCHIVED}
+              disabled={
+                isUpdatingStatus || currentHabit.status === HabitStatus.ARCHIVED
+              }
               variant="outline"
             >
               Activate
@@ -171,7 +172,9 @@ export function HabitDetails({
           {currentHabit.status !== HabitStatus.PAUSED && (
             <Button
               onClick={() => handleUpdateStatus(HabitStatus.PAUSED)}
-              disabled={isUpdatingStatus || currentHabit.status === HabitStatus.ARCHIVED}
+              disabled={
+                isUpdatingStatus || currentHabit.status === HabitStatus.ARCHIVED
+              }
               variant="outline"
             >
               Pause
@@ -225,7 +228,7 @@ export function HabitDetails({
               disabled={isDeleting}
               className="bg-red-600 hover:bg-red-700 text-white"
             >
-              {isDeleting ? "Deleting..." : "Confirm"}
+              {isDeleting ? 'Deleting...' : 'Confirm'}
             </Button>
           </DialogFooter>
         </DialogContent>

@@ -4,18 +4,18 @@ Next.js application providing the UI and authentication layer for the Habit Trac
 
 ## Tech Stack
 
-| Technology | Version | Purpose |
-|---|---|---|
-| Next.js | 16 | App Router, Server Components, Turbopack |
-| React | 19 | UI rendering, Server/Client Components |
-| TypeScript | 6 | Strict mode, type safety |
-| NextAuth.js | 4 | Google + GitHub SSO, JWT sessions |
-| Tailwind CSS | 4 | Utility-first styling (`@import "tailwindcss"`) |
-| ShadCN UI | latest | Pre-built accessible components (Radix-based) |
-| Axios | 1.7 | Client-side HTTP (mutations only) |
-| Socket.IO Client | 4 | Real-time milestone notifications |
-| Zustand | 4 | Lightweight state management |
-| Lucide React | 1 | Icon library |
+| Technology       | Version | Purpose                                         |
+| ---------------- | ------- | ----------------------------------------------- |
+| Next.js          | 16      | App Router, Server Components, Turbopack        |
+| React            | 19      | UI rendering, Server/Client Components          |
+| TypeScript       | 6       | Strict mode, type safety                        |
+| NextAuth.js      | 4       | Google + GitHub SSO, JWT sessions               |
+| Tailwind CSS     | 4       | Utility-first styling (`@import "tailwindcss"`) |
+| ShadCN UI        | latest  | Pre-built accessible components (Radix-based)   |
+| Axios            | 1.7     | Client-side HTTP (mutations only)               |
+| Socket.IO Client | 4       | Real-time milestone notifications               |
+| Zustand          | 4       | Lightweight state management                    |
+| Lucide React     | 1       | Icon library                                    |
 
 ## Architecture
 
@@ -131,21 +131,22 @@ flowchart LR
     SC -->|"pass data as props"| CC
 ```
 
-| Concern | Where | How |
-|---|---|---|
-| Initial page data | Server Component | `lib/api.server.ts` with `getServerSession()` |
-| Mutations (create, update, delete) | Client Component | `lib/api.ts` (Axios) with `useSession()` |
-| Real-time notifications | Client Component | `lib/ws.ts` (Socket.IO) |
-| Re-fetch after mutation | Client Component | `router.refresh()` triggers server re-render |
+| Concern                            | Where            | How                                           |
+| ---------------------------------- | ---------------- | --------------------------------------------- |
+| Initial page data                  | Server Component | `lib/api.server.ts` with `getServerSession()` |
+| Mutations (create, update, delete) | Client Component | `lib/api.ts` (Axios) with `useSession()`      |
+| Real-time notifications            | Client Component | `lib/ws.ts` (Socket.IO)                       |
+| Re-fetch after mutation            | Client Component | `router.refresh()` triggers server re-render  |
 
 ## Pages & Routes
 
-| Route | Component | Auth | Description |
-|---|---|---|---|
-| `/` | `LoginPage` | Public | Google/GitHub sign-in buttons; redirects to `/habits` if authenticated |
-| `/habits` | `HabitsPageClient` | Protected | Habit list with search, filters (All/Active/Paused/Archived) |
-| `/habits/create` | `CreateHabitPageClient` | Protected | Create habit form (name, description, start date) |
-| `/habits/[id]` | `HabitDetails` | Protected | Habit detail with calendar view, check-in button, streak stats |
+| Route               | Component               | Auth      | Description                                                            |
+| ------------------- | ----------------------- | --------- | ---------------------------------------------------------------------- |
+| `/`                 | `LoginPage`             | Public    | Google/GitHub sign-in buttons; redirects to `/habits` if authenticated |
+| `/habits`           | `HabitsPageClient`      | Protected | Habit list with search, filters (All/Active/Paused/Archived)           |
+| `/habits/create`    | `CreateHabitPageClient` | Protected | Create habit form (name, description, start date)                      |
+| `/habits/[id]`      | `HabitDetails`          | Protected | Habit detail with calendar view, check-in button, streak stats         |
+| `/habits/[id]/edit` | `EditHabitPageClient`   | Protected | Edit habit form                                                        |
 
 Protected routes check `getServerSession(authOptions)` server-side and redirect to `/` if unauthenticated.
 
@@ -165,6 +166,9 @@ frontend/
         page.tsx                     # Habit detail (server component)
         loading.tsx                  # Skeleton loader
         error.tsx                    # Error boundary
+        edit/
+          page.tsx                   # Edit habit (server component)
+          loading.tsx                # Skeleton loader
     api/auth/[...nextauth]/route.ts  # NextAuth handler
   components/
     index.ts                         # Barrel exports
@@ -173,15 +177,20 @@ frontend/
     HabitCard/HabitCard.tsx          # Habit card in list
     HabitList/HabitList.tsx          # Grid of habit cards
     HabitForm/HabitForm.tsx          # Create/edit form
+    EditHabitForm/EditHabitForm.tsx  # Edit-specific form
+    EditHabitPageClient/EditHabitPageClient.tsx  # Edit page client component
     HabitDetails/HabitDetails.tsx    # Detail view
     HabitDetails/TodayCheckInButton.tsx
     CalendarView/CalendarView.tsx    # Monthly check-in calendar
+    ErrorBoundary/ErrorBoundary.tsx  # Reusable error boundary
+    NotificationToaster/NotificationToaster.tsx  # Milestone toast notifications
     Filters/Filters.tsx             # Status filter buttons
     SearchInput/SearchInput.tsx     # Search input
     ui/                             # ShadCN components (auto-managed)
   hooks/
     index.ts                         # Barrel exports
     useHabits.ts                    # Habits data + refetch
+    useHabitTracker.ts              # Habit tracker state management
     useWebsocket.ts                 # Socket.IO + milestone events
   lib/
     index.ts                         # Barrel exports (client-safe only)
@@ -212,10 +221,7 @@ GITHUB_CLIENT_SECRET=your-github-client-secret
 
 # JWT (must match backend)
 JWT_SECRET=your-jwt-secret
-JWT_EXPIRES_IN=7d
-
-# Database (NextAuth PrismaAdapter)
-DATABASE_URL=postgresql://user:password@localhost:5432/habittracker
+JWT_EXPIRES_IN=1d
 
 # Backend API (server-side only)
 BACKEND_API_URL=http://localhost:4000/api
@@ -291,22 +297,22 @@ Then open [http://localhost:3000](http://localhost:3000) and sign in with Google
 
 ## Scripts
 
-| Command | Description |
-|---|---|
-| `yarn dev` | Start dev server on port 3000 (Turbopack) |
-| `yarn build` | Production build |
-| `yarn start` | Start production server |
-| `yarn lint` | Run ESLint |
-| `yarn format` | Run Prettier |
-| `yarn test` | Run tests |
+| Command       | Description                               |
+| ------------- | ----------------------------------------- |
+| `yarn dev`    | Start dev server on port 3000 (Turbopack) |
+| `yarn build`  | Production build                          |
+| `yarn start`  | Start production server                   |
+| `yarn lint`   | Run ESLint                                |
+| `yarn format` | Run Prettier                              |
+| `yarn test`   | Run tests                                 |
 
 ## Shared Package
 
 The frontend imports types, DTOs, and utilities from `@habit/shared`:
 
 ```ts
-import { Habit, CheckIn, HabitStatus } from "@habit/shared";
-import { isToday, toISODate } from "@habit/shared";
+import { Habit, CheckIn, HabitStatus } from '@habit/shared';
+import { isToday, toISODate } from '@habit/shared';
 ```
 
 Path alias `@habit/shared` is configured in `tsconfig.json` and `next.config.ts` (`transpilePackages`).

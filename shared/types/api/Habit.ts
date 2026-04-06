@@ -1,4 +1,4 @@
-import { HabitStatus } from "../domain";
+import { HabitStatus } from '../domain';
 
 export interface Habit {
   id: string;

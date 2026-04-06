@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import type { Habit, UpdateHabitDto } from "@habit/shared";
-import { apiClient } from "@/lib/api";
-import { EditHabitForm } from "@/components/EditHabitForm/EditHabitForm";
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import type { Habit, UpdateHabitDto } from '@habit/shared';
+import { apiClient } from '@/lib/api';
+import { EditHabitForm } from '@/components/EditHabitForm/EditHabitForm';
 
 interface EditHabitPageClientProps {
   habit: Habit;
@@ -27,7 +27,7 @@ export function EditHabitPageClient({
       const message =
         err instanceof Error
           ? err.message
-          : "Failed to update habit. Please try again.";
+          : 'Failed to update habit. Please try again.';
       setSubmitError(message);
       setIsLoading(false);
     }

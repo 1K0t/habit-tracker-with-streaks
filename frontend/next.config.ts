@@ -1,20 +1,20 @@
-import type { NextConfig } from "next";
-import path from "path";
+import type { NextConfig } from 'next';
+import path from 'path';
 
 const nextConfig: NextConfig = {
-  transpilePackages: ["@habit/shared"],
+  transpilePackages: ['@habit/shared'],
   turbopack: {
-    root: path.join(__dirname, ".."),
+    root: path.join(__dirname, '..'),
   },
   images: {
     remotePatterns: [
       {
-        protocol: "https",
-        hostname: "avatars.githubusercontent.com",
+        protocol: 'https',
+        hostname: 'avatars.githubusercontent.com',
       },
       {
-        protocol: "https",
-        hostname: "lh3.googleusercontent.com",
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
       },
     ],
   },

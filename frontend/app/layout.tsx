@@ -1,7 +1,11 @@
 import type { Metadata } from 'next';
 import { Providers } from '@/components/Providers';
 import { Navbar } from '@/components/Navbar/Navbar';
+import { validateEnvironment } from '@/lib/env.validation';
 import './globals.css';
+
+// Validate environment at build/startup time
+validateEnvironment();
 
 export const metadata: Metadata = {
   title: 'Habit Tracker',

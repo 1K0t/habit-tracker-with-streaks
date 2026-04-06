@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import Image from "next/image";
-import { useSession, signOut } from "next-auth/react";
-import { Button } from "@/components/ui/button";
+import Link from 'next/link';
+import Image from 'next/image';
+import { useSession, signOut } from 'next-auth/react';
+import { Button } from '@/components/ui/button';
 
 export function Navbar(): React.ReactElement | null {
   const { data: session } = useSession();
@@ -29,7 +29,7 @@ export function Navbar(): React.ReactElement | null {
           {session.user?.image && (
             <Image
               src={session.user.image}
-              alt={session.user?.name || "User avatar"}
+              alt={session.user?.name || 'User avatar'}
               width={32}
               height={32}
               className="rounded-full"
@@ -39,7 +39,7 @@ export function Navbar(): React.ReactElement | null {
           <Button
             variant="outline"
             size="sm"
-            onClick={() => signOut({ callbackUrl: "/" })}
+            onClick={() => signOut({ callbackUrl: '/' })}
           >
             Sign Out
           </Button>

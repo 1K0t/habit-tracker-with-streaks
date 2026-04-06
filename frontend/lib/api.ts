@@ -1,5 +1,5 @@
-import axios, { AxiosInstance } from "axios";
-import { getSession } from "next-auth/react";
+import axios, { AxiosInstance } from 'axios';
+import { getSession } from 'next-auth/react';
 import type {
   Habit,
   CreateHabitDto,
@@ -8,11 +8,12 @@ import type {
   CheckInTodayResponse,
   GetHabitsParams,
   SuccessResponse,
-} from "@habit/shared";
+} from '@habit/shared';
 
 // Create axios instance
 const api: AxiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
+  timeout: 30000,
 });
 
 // Request interceptor to attach JWT token
@@ -26,7 +27,7 @@ api.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error);
-  }
+  },
 );
 
 // Response interceptor to extract error messages from backend
@@ -38,25 +39,25 @@ api.interceptors.response.use(
       return Promise.reject(new Error(errorMessage));
     }
     return Promise.reject(error);
-  }
+  },
 );
 
 // API functions
 export const apiClient = {
   // Users
   async getMe(): Promise<UserProfile> {
-    const { data } = await api.get<UserProfile>("/users/me");
+    const { data } = await api.get<UserProfile>('/users/me');
     return data;
   },
 
   // Habits
   async getHabits(params?: GetHabitsParams): Promise<Habit[]> {
-    const { data } = await api.get<Habit[]>("/habits", { params });
+    const { data } = await api.get<Habit[]>('/habits', { params });
     return data;
   },
 
   async createHabit(dto: CreateHabitDto): Promise<Habit> {
-    const { data } = await api.post<Habit>("/habits", dto);
+    const { data } = await api.post<Habit>('/habits', dto);
     return data;
   },
 
@@ -78,14 +79,14 @@ export const apiClient = {
   // Check-ins
   async checkInToday(habitId: string): Promise<CheckInTodayResponse> {
     const { data } = await api.post<CheckInTodayResponse>(
-      `/habits/${habitId}/checkins/today`
+      `/habits/${habitId}/checkins/today`,
     );
     return data;
   },
 
   async undoCheckInToday(habitId: string): Promise<SuccessResponse> {
     const { data } = await api.delete<SuccessResponse>(
-      `/habits/${habitId}/checkins/today`
+      `/habits/${habitId}/checkins/today`,
     );
     return data;
   },

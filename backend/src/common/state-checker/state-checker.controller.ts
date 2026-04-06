@@ -1,23 +1,22 @@
-import { Controller, Get } from "@nestjs/common";
-import { ApiTags, ApiOperation, ApiOkResponse } from "@nestjs/swagger";
+import { Controller, Get } from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiOkResponse } from '@nestjs/swagger';
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const { version } = require("../../../package.json");
+import packageJson from '../../../package.json';
 
-@ApiTags("state-checker")
+@ApiTags('state-checker')
 @Controller()
 export class StateCheckerController {
-  @Get("health")
-  @ApiOperation({ summary: "Service liveness check" })
-  @ApiOkResponse({ description: "Service is alive" })
+  @Get('health')
+  @ApiOperation({ summary: 'Service liveness check' })
+  @ApiOkResponse({ description: 'Service is alive' })
   getHealth(): { healthy: boolean } {
     return { healthy: true };
   }
 
-  @Get("version")
-  @ApiOperation({ summary: "Get application version" })
-  @ApiOkResponse({ description: "Application version" })
+  @Get('version')
+  @ApiOperation({ summary: 'Get application version' })
+  @ApiOkResponse({ description: 'Application version' })
   getVersion(): { version: string } {
-    return { version };
+    return { version: packageJson.version };
   }
 }

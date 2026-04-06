@@ -135,7 +135,7 @@ import {
   ApiForbiddenResponse,
   ApiNotFoundResponse,
   ApiBody,
-} from "@nestjs/swagger";
+} from '@nestjs/swagger';
 ```
 
 ✅ 7.1 Required Patterns for Controllers
@@ -199,13 +199,13 @@ Example:
 
 ```ts
 export class CreateHabitDto {
-  @ApiProperty({ example: "Drink Water" })
+  @ApiProperty({ example: 'Drink Water' })
   name: string;
 
-  @ApiProperty({ example: "8 glasses/day", required: false })
+  @ApiProperty({ example: '8 glasses/day', required: false })
   description?: string;
 
-  @ApiProperty({ example: "2026-04-03" })
+  @ApiProperty({ example: '2026-04-03' })
   startDate: string;
 }
 ```

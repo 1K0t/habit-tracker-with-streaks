@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import Link from "next/link";
-import type { CreateHabitDto } from "@habit/shared";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
+import { useState } from 'react';
+import Link from 'next/link';
+import type { CreateHabitDto } from '@habit/shared';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { cn } from '@/lib/utils';
 
 interface HabitFormProps {
   onSubmit: (dto: CreateHabitDto) => Promise<void>;
@@ -21,23 +21,23 @@ export function HabitForm({
   onSubmit,
   isLoading = false,
 }: HabitFormProps): React.ReactNode {
-  const today = new Date().toISOString().split("T")[0];
+  const today = new Date().toISOString().split('T')[0];
 
-  const [name, setName] = useState<string>("");
-  const [description, setDescription] = useState<string>("");
+  const [name, setName] = useState<string>('');
+  const [description, setDescription] = useState<string>('');
   const [startDate, setStartDate] = useState<string>(today);
   const [errors, setErrors] = useState<FormErrors>({});
 
   function validate(): boolean {
     const newErrors: FormErrors = {};
-    if (!name.trim()) newErrors.name = "Name is required";
-    if (!startDate) newErrors.startDate = "Start date is required";
+    if (!name.trim()) newErrors.name = 'Name is required';
+    if (!startDate) newErrors.startDate = 'Start date is required';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   }
 
   async function handleSubmit(
-    e: React.FormEvent<HTMLFormElement>
+    e: React.FormEvent<HTMLFormElement>,
   ): Promise<void> {
     e.preventDefault();
     if (!validate()) return;
@@ -62,12 +62,10 @@ export function HabitForm({
           placeholder="e.g. Morning run"
           disabled={isLoading}
           className={cn(
-            errors.name && "border-red-500 focus-visible:ring-red-500"
+            errors.name && 'border-red-500 focus-visible:ring-red-500',
           )}
         />
-        {errors.name && (
-          <p className="text-sm text-red-600">{errors.name}</p>
-        )}
+        {errors.name && <p className="text-sm text-red-600">{errors.name}</p>}
       </div>
 
       <div className="space-y-2">
@@ -102,7 +100,7 @@ export function HabitForm({
           onChange={(e) => setStartDate(e.target.value)}
           disabled={isLoading}
           className={cn(
-            errors.startDate && "border-red-500 focus-visible:ring-red-500"
+            errors.startDate && 'border-red-500 focus-visible:ring-red-500',
           )}
         />
         {errors.startDate && (
@@ -112,7 +110,7 @@ export function HabitForm({
 
       <div className="flex gap-3">
         <Button type="submit" disabled={isLoading}>
-          {isLoading ? "Creating..." : "Create Habit"}
+          {isLoading ? 'Creating...' : 'Create Habit'}
         </Button>
         <Button type="button" variant="outline" asChild disabled={isLoading}>
           <Link href="/habits">Cancel</Link>
